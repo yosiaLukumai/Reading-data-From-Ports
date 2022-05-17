@@ -5,6 +5,8 @@
 
 import serial
 import time
+import requests
+import schedule
 
 class ReadFromComPorts:
     comPort = ""
@@ -119,12 +121,61 @@ class ReadFromComPorts:
             print(e)
 
     
-    def sendDataToServer(self):
-        pass
+    def postDataToServer(self, url: str, payload: dict):
+        """
+        The methods will be performing the work of sending data to the server according to the paload provided
+        when one wants to make it continualy he/she can use the method schedule sending or use a loop after 
+        building the payload to be sent
+
+        Return: Response object when the data has been sent successful
+        """
+        try:
+            requestSent = requests.post(url, json=payload)
+            print(requestSent.text)
+        except Exception as e:
+            print(" --> Warning: Data wasn't sent")
+            print(" >> Something has went wrong try to read the docs of the error raised from request lib")
+            print(e)
+
+    def getRequest(self,url: str, paramsReceived=None):
+        """
+        This methods helps one to send a get request
+        Perform Get request and attach the route parameters this method will be useful like sending data to things speak sever 
+        since they use the route parameters
+        Return: requsets.text as the response
+        """
+        try:
+            if( paramsReceived == None):
+                requestSent = requests.get(url)
+                # print(requestSent.text)
+                return requestSent.text
+            elif paramsReceived is not None and type(paramsReceived) is dict:
+                requestSent = requests.get(url, params= paramsReceived)
+                # print(requestSent.text)
+                return requestSent.text
+        except Exception as e:
+            print(" --> Warning: Data wasn't sent")
+            print(" >> Something has went wrong try to read the docs of the error raised from request lib")
+            print(e)
 
 
-
+#Instatiate the object then one can sart using the package smoothly
 com1 = ReadFromComPorts("COM1", 9600)
 
-data = com1.readLineData("xx")
-print(data)
+# Testing the post method
+# com1.postDataToServer('https://eopzpeglcqyig8l.m.pipedream.net', {'name': "yoa", 'age': 34})
+
+
+# Testing the get method
+# response = com1.getRequest('https://api.github.com/events')
+# print(response)
+
+
+
+# Perform Get request and attach the route parameters this method will be useful like sending data to things speak sever 
+#since they use the route parameters
+
+# data = com1.readLineData("xx")
+# print(data)
+
+
