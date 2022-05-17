@@ -56,6 +56,7 @@ class ReadFromComPorts:
                 self.comPort.open()
         except (AttributeError, Exception ) as e:
             print("---> Configure well your ports {}".format(self.comportname))
+            print(e)
 
     def checkifTheComportisOpen(self):
         try:
@@ -66,6 +67,7 @@ class ReadFromComPorts:
                 print(">>>> Port is not open")
         except Exception as e:
             print("---> Configure your port {} well ".format(self.comportname))
+            print(e)
 
     
     def closePort(self):
@@ -81,9 +83,10 @@ class ReadFromComPorts:
                 return self.comPort.close()
         except Exception as e:
             print(">>> something has went wrong restart the script")
+            print(e)
         
     
-    def readCharacters(self):
+    def readCharacterData(self):
         """
         This  will return the character from the communication port that has been obtained after reading
         return: 
@@ -91,13 +94,13 @@ class ReadFromComPorts:
         """
         try:
             if(self.comPort.is_open):
-                data = self.comPort.read()
-                return str(data)
+                data = self.comPort.read().decode("utf-8")
+                return data
         except Exception as e:
             print("---> something has went wrong while trying to read the line from the communication port")
             print(e)
     
-    def readLine(self, splitparameter=' '):
+    def readLineData(self, splitparameter=' '):
         """
         This methods return the characters received 
         return:
@@ -117,5 +120,11 @@ class ReadFromComPorts:
 
     
     def sendDataToServer(self):
-        data
+        pass
 
+
+
+com1 = ReadFromComPorts("COM1", 9600)
+
+data = com1.readLineData("xx")
+print(data)
