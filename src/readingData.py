@@ -2,11 +2,13 @@
 # Pyserial 
 # Author: Yosia Lukumai
 
+
 import serial
 import time
 
 class ReadFromComPorts:
     comPort = ""
+    data = []
 
     def __init__(self, comportname: str , baudrate: int , timeout=None):
         """
@@ -87,12 +89,33 @@ class ReadFromComPorts:
         return: 
         Sequence: characters that has been obtained from the comp port
         """
+        try:
+            if(self.comPort.is_open):
+                data = self.comPort.read()
+                return str(data)
+        except Exception as e:
+            print("---> something has went wrong while trying to read the line from the communication port")
+            print(e)
+    
+    def readLine(self, splitparameter=' '):
+        """
+        This methods return the characters received 
+        return:
+        list - That various data can be separated
+        """
+        try:
+            if self.comPort.is_open:
+                print("Reading the line from the comport")
+                data = self.comPort.readline()
+                dataDecoded = str(data[0: len(data)].decode('utf-8'))
+                sortedData = dataDecoded.split(splitparameter)
+                sortedData.pop()
+                return sortedData
+        except Exception as e:
+            print("---> something has went wrong while trying to read the line from the communication port")
+            print(e)
 
+    
+    def sendDataToServer(self):
+        data
 
-
-
-
-com1 = ReadFromComPorts("COM1", 9600)
-com1.checkifTheComportisOpen()
-com1.closePort()
-com1.checkifTheComportisOpen()
