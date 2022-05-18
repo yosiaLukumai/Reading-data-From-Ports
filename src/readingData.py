@@ -204,6 +204,9 @@ class ReadFromComPorts:
                 self.postDataToServer(url, payload)
             elif method.lower() == 'get':
                 self.getRequest(url, payload)
+            else:
+                print("--> Sorry the package was built with post and get for sending data to the server")
+                print("--> Use the right http request method or obtain data and post via request lib or other lib")
         except Exception as e:
             print(" Error: Observe the sequence parameter of keys you passed to the function")
             print(e)
@@ -225,7 +228,7 @@ class ReadFromComPorts:
 
 
 #Instatiate the object then one can sart using the package smoothly
-com1 = ReadFromComPorts("COM1", 9600)
+# com1 = ReadFromComPorts("COM1", 9600)
 
 # Testing the post method
 # com1.postDataToServer('https://eozpeglcqyig8l.m.pipedream.net', {'name': "yoa", 'age': 34})
@@ -249,7 +252,10 @@ com1 = ReadFromComPorts("COM1", 9600)
 
 # com1.scheduleSending("https://eopzpeglcqyig8l.m.pipedream.net", 2, 'POST',{"name": "op"})
 
-com1.scheduleSendingDataFromPorts("https://eopzpeglcqyig8l.m.pipedream.net", 1,'GET', "xx", ('speed', 'long', 'lat'))
+# com1.scheduleSendingDataFromPorts("https://opzpeglcqyig8l.m.pipedram.net", 1,'GET', "xx", ('speed', 'long', 'lat'))
+
+
+
 
 
 
