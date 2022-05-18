@@ -121,7 +121,7 @@ class ReadFromComPorts:
             print(e)
 
     
-    def postDataToServer(self, url: str, payload: dict):
+    def postDataToServer(self, url: str, payload: None):
         """
         The methods will be performing the work of sending data to the server according to the paload provided
         when one wants to make it continualy he/she can use the method schedule sending or use a loop after 
@@ -132,6 +132,11 @@ class ReadFromComPorts:
         try:
             requestSent = requests.post(url, json=payload)
             print(requestSent.text)
+            print("")
+            print("----> Data sent successful")
+            print("")
+            return requestSent.text
+            
         except Exception as e:
             print(" --> Warning: Data wasn't sent")
             print(" >> Something has went wrong try to read the docs of the error raised from request lib")
@@ -147,23 +152,55 @@ class ReadFromComPorts:
         try:
             if( paramsReceived == None):
                 requestSent = requests.get(url)
-                # print(requestSent.text)
+                print(requestSent.text)
+                print("")
+                print("----> Data sent successful")
+                print("")
                 return requestSent.text
             elif paramsReceived is not None and type(paramsReceived) is dict:
                 requestSent = requests.get(url, params= paramsReceived)
-                # print(requestSent.text)
+                print(requestSent.text)
+                print("")
+                print("----> Data sent successful")
+                print("")
                 return requestSent.text
         except Exception as e:
             print(" --> Warning: Data wasn't sent")
             print(" >> Something has went wrong try to read the docs of the error raised from request lib")
             print(e)
 
+    
+    
+    def scheduleSending(self, url:str, time:float, method: str, payload: None):
+        """
+        This method is helpful for sending data continously one can simulate real time sending of data using this method
+        Return : None but prints the logs of the request.text response
+        """
+        try:
+            if method.lower() == 'post':
+                schedule.every(time).seconds.do(lambda: self.postDataToServer(url, payload))
+            elif method.lower() == "get":
+                schedule.every(time).seconds.do(lambda : self.getRequest(url,payload))
+            else:
+                print(">> Warning: Unsupported method ({}) ".format(method))
+                print("we have not supported the other request format uses the request lib directly on the data you have received from ports")
+                return -1
+            
+            while True:
+                schedule.run_pending()
+        except Exception as e:
+            print(" --> Warning: Data wasn't sent")
+            print(" >> Something has went wrong try to read the docs of the error raised from request lib || schedule lib || pyserial")
+            print(e)
+        
+
+
 
 #Instatiate the object then one can sart using the package smoothly
 com1 = ReadFromComPorts("COM1", 9600)
 
 # Testing the post method
-# com1.postDataToServer('https://eopzpeglcqyig8l.m.pipedream.net', {'name': "yoa", 'age': 34})
+# com1.postDataToServer('https://eozpeglcqyig8l.m.pipedream.net', {'name': "yoa", 'age': 34})
 
 
 # Testing the get method
@@ -174,8 +211,15 @@ com1 = ReadFromComPorts("COM1", 9600)
 
 # Perform Get request and attach the route parameters this method will be useful like sending data to things speak sever 
 #since they use the route parameters
+# Example
+# response = com1.getRequest('https://eopzpeglcqyig8l.m.pipedream.net', {"api_key": 345245, 'name': "migos"})
+# print(response)
 
 # data = com1.readLineData("xx")
 # print(data)
+
+
+# com1.scheduleSending("dodo", 0.2)
+com1.scheduleSending("https://eopzpeglcqyig8l.m.pipedream.net", 2, 'POST',{"name": "op"})
 
 
