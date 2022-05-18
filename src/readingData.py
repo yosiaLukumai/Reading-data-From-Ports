@@ -102,7 +102,7 @@ class ReadFromComPorts:
             print("---> something has went wrong while trying to read the line from the communication port")
             print(e)
     
-    def readLineData(self, splitparameter=' '):
+    def readLineOfData(self, splitparameter=' '):
         """
         This methods return the characters received 
         return:
@@ -192,8 +192,36 @@ class ReadFromComPorts:
             print(" --> Warning: Data wasn't sent")
             print(" >> Something has went wrong try to read the docs of the error raised from request lib || schedule lib || pyserial")
             print(e)
+    
+
+    def getMedataInDictionary(self,  splitparameter, url, method, *seq):
+        try:
+            data = self.readLineOfData(splitparameter)
+            print(seq[0])
+            payload = dict(zip(seq[0], data))
+            print("Payload: {}".format(payload))
+            if method.lower() == "post":
+                self.postDataToServer(url, payload)
+            elif method.lower() == 'get':
+                self.getRequest(url, payload)
+        except Exception as e:
+            print(" Error: Observe the sequence parameter of keys you passed to the function")
+            print(e)
+        
+    
         
 
+    def scheduleSendingDataFromPorts(self, url:str,  time:float, method:str, splitparameter: str, *keys):
+        """
+        The methods read data from ports and  assigning to dict then send data over the server according to the schedule
+        Return: None  but prints log of success sending
+        """
+
+        # extracting the dictionary
+        print(keys[0])
+        schedule.every(time).seconds.do(lambda: self.getMedataInDictionary(splitparameter, url, method, keys[0]) )
+        while True:
+            schedule.run_pending()
 
 
 #Instatiate the object then one can sart using the package smoothly
@@ -219,7 +247,11 @@ com1 = ReadFromComPorts("COM1", 9600)
 # print(data)
 
 
-# com1.scheduleSending("dodo", 0.2)
-com1.scheduleSending("https://eopzpeglcqyig8l.m.pipedream.net", 2, 'POST',{"name": "op"})
+# com1.scheduleSending("https://eopzpeglcqyig8l.m.pipedream.net", 2, 'POST',{"name": "op"})
+
+com1.scheduleSendingDataFromPorts("https://eopzpeglcqyig8l.m.pipedream.net", 1,'GET', "xx", ('speed', 'long', 'lat'))
+
+
+
 
 
