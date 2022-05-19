@@ -11,7 +11,7 @@ Installation
 ============
 
 ``` {.bash}
-pip install read-comport-tonet
+pip install read_comports_tonet
 ```
 
 Requirements || dependecies 
@@ -35,6 +35,7 @@ then instatiate it like below passing two parameter comportname example
 COM1 and baudarate e.g 9600
 
 ``` {.bash}
+from read_comports_tonet import ReadFromComPorts
 COM1 = ReadFromComPorts("<comport name e.g COM1>", baudrate)
 ```
 

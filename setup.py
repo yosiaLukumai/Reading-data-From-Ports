@@ -9,8 +9,8 @@ long_description = (this_directory / "README.md").read_text()
 
 # Setting up
 setup(
-    name = 'read-comport-tonet',
-    version = "0.0.7",
+    name = 'read_comports_tonet',
+    version = "0.0.1",
     author = "Yosia Lukumai",
     author_email = "yosialukumai@gmail.com",
     url ='https://github.com/yosiaLukumai/Reading-data-From-Ports',

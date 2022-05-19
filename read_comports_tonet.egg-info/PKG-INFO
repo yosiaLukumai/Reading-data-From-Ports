@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
-Name: read-comport-tonet
-Version: 0.0.7
+Name: read-comports-tonet
+Version: 0.0.1
 Summary: Easy read data from COM ports and send them over the server(net) example in your arduino or raspberrypi project
 Home-page: https://github.com/yosiaLukumai/Reading-data-From-Ports
 Author: Yosia Lukumai
@@ -30,7 +30,7 @@ Installation
 ============
 
 ``` {.bash}
-pip install read-comport-tonet
+pip install read_comports_tonet
 ```
 
 Requirements || dependecies 
@@ -54,6 +54,7 @@ then instatiate it like below passing two parameter comportname example
 COM1 and baudarate e.g 9600
 
 ``` {.bash}
+from read_comports_tonet import ReadFromComPorts
 COM1 = ReadFromComPorts("<comport name e.g COM1>", baudrate)
 ```
 

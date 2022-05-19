@@ -69,7 +69,7 @@ class ReadFromComPorts:
                 print(">>>> Port is not open")
         except Exception as e:
             print("---> Configure your port {} well ".format(self.comportname))
-            print("---> The port isn't open....")
+            print("---> The port isn't open.... || Error:  {}".format(e))
 
     
     def closePort(self):
@@ -227,9 +227,10 @@ class ReadFromComPorts:
             schedule.run_pending()
 
 
-#Instatiate the object then one can sart using the package smoothly
+#Instatiate the object then one can sart using the packckage smoothly
 
-
+# com1 = ReadFromComPorts("com1", 9600)
+# com1.checkifTheComportisOpen()
 # Testing the post method
 # com1.postDataToServer('https://eozpeglcqyig8l.m.pipedream.net', {'name': "yoa", 'age': 34})
 
