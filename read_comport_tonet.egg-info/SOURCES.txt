@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+read-comport-tonet/__init__.py
+read-comport-tonet/readFromComPortToNet.py
+read_comport_tonet.egg-info/PKG-INFO
+read_comport_tonet.egg-info/SOURCES.txt
+read_comport_tonet.egg-info/dependency_links.txt
+read_comport_tonet.egg-info/requires.txt
+read_comport_tonet.egg-info/top_level.txt
